@@ -11,6 +11,12 @@ export default function NewEventsSection() {
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["events"],
     queryFn: fetchEvents,
+    // 다른 페이지 이동했다가 돌아올 때 캐시된 데이터 사용하는데 신규데이터 업데이트도 동시에
+    // 이뤄지는데 staleTime 기본값은 '0'으로 즉시 업데이트하도록 하는데 5000ms(5초)로 설정하면 다른
+    // 화면 이동했다가 5초이내 돌아오면 업데이트 요청을 하지 않음
+    staleTime: 5000,
+    // gcTime 은 캐쉬한 데이터 보관시간으로 defalut는 5분인데 30초로 조정하면 30분뒤 캐쉬데이터는 폐기됨
+    // gcTime: 30000,
   });
 
   let content;
