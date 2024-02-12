@@ -16,8 +16,8 @@ export default function FindEventSection() {
   // isPending 은 입력 대기중 상태표시이며 (로딩스피너가 표시)
   // isLoading 은 쿼리가 비활성화 되었다고 하여 True가 되지 않음
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["events", { search: searchTerm }],
-    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
+    queryKey: ["events", { searchTerm: searchTerm }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     enabled: searchTerm != undefined,
   });
 

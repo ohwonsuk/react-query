@@ -9,8 +9,8 @@ export default function NewEventsSection() {
   // data는 fetch 통해서 받은 데이터이며, 데이터 받는 상황 모니터링을 위한 isPending
   // 오류값을 받는 경우 isError가 True, 에러메시지 확인은 error 속성에서 가능
   const { data, isPending, isError, error } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["events", { max: 3 }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     // 다른 페이지 이동했다가 돌아올 때 캐시된 데이터 사용하는데 신규데이터 업데이트도 동시에
     // 이뤄지는데 staleTime 기본값은 '0'으로 즉시 업데이트하도록 하는데 5000ms(5초)로 설정하면 다른
     // 화면 이동했다가 5초이내 돌아오면 업데이트 요청을 하지 않음
